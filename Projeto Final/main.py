@@ -47,6 +47,33 @@ if __name__ == '__main__':
                 print('Alunos cadastrados na disciplina: \n')
                 tcrud.read()
 
+            elif aux == 3:
+                mat = input('Digite a matricula do aluno: ')
+
+                tcrud.delete(mat)
+
+                print('\n')
+                print('Aluno deletado!')
+
+            elif aux == 4:
+                auxnp1 = input('Digite a nova nota da NP1: ')
+                
+                tcrud.updatenp1(auxnp1)
+                
+                print('\n')
+                print('Nota atualizada!')
+            
+            elif aux == 5:
+                auxnp2 = input('Digite a nova nota da NP2: ')
+                
+                tcrud.updatenp1(auxnp2)
+                
+                print('\n')
+                print('Nota atualizada!')
+
+            elif aux == 0:
+                break
+
 
     elif (op == 1):
         while aux != 4:
@@ -55,15 +82,24 @@ if __name__ == '__main__':
             f'1 - Ver nota da NP1'
             f'2 - Ver nota da NP2'
             f'3 - Ver nota final'
-            f'4 - Sair\nOpcão: '))
+            f'0 - Sair\nOpcão: '))
 
             if aux == 1:
-                break
+                mat1 = input('Digite sua matricula: \n')
+
+                print('nota da NP1: \n')
+                tcrud.readnp1(mat1)
             if aux == 2:
-                break
+                mat2 = input('Digite sua matricula: \n')
+
+                print('nota da NP2: \n')
+                tcrud.readnp2(mat2)
             if aux == 3:
-                break
-            if aux == 4:
+                mat3 = input('Digite sua matricula: \n')
+
+                print('nota da NP2: \n')
+                tcrud.notafinal(mat3)
+            if aux == 0:
                 break
 
 

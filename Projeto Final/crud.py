@@ -33,3 +33,7 @@ class crudmenu(object):
     def readnp2(self,aux):
         return self.db.execute_query('match (n:Aluno{mat: $mat} RETURN n.np2',
                                      {'mat': aux})
+
+    def notafinal(self, aux):
+        return self.db.execute_query('match (n:Aluno{mat: $mat} RETURN ((n.np1 + n.np2)/2)',
+                                     {'mat': aux})
