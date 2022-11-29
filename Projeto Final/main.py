@@ -1,4 +1,5 @@
 # from pprintpp import pprint as pp
+from crud import crudmenu
 from db.database import Graph
 from helper.write_a_json import write_a_json as wj
 
@@ -6,38 +7,7 @@ db = Graph(uri='bolt://54.166.33.76:7687', user='neo4j', password='cycles-facepi
 
 if __name__ == '__main__':
 
- class CRUD(object):
-
-    def __init__(self):
-        self.db = db
-
-    def create(self, aluno):
-        return self.db.execute_query('create (a:Aluno{nome: $nome, mat: $mat, np1: $np1, np2: $np2}) RETURN a',
-                                     {'nome': aluno['nome'], 'mat': aluno['matricula', 'np1': aluno['np1'], 'np2': aluno['np2']]})
-
-    def read(self):
-        return self.db.execute_query('match(n:Aluno) RETURN n.nome')
-
-    def delete(self, aux):
-        return self.db.execute_query('match (n:Aluno{mat: $mat}) DELETE n',
-                                     {'mat': aux['matricula']})
-
-    def updatenp1(self, aux, nota):
-        return self.db.execute_query('match (n:Aluno{mat: $mat}) SET n.np1 = $np1 RETURN n',
-                                     {'mat': aux, 'np1': nota})
-    
-    def updatenp2(self, aux, nota):
-        return self.db.execute_query('match (n:Aluno{mat: $mat}) SET n.np2 = $np2 RETURN n',
-                                     {'mat': aux, 'np2': nota})
-
-    def readnp1(self,aux):
-        return self.db.execute_query('match (n:Aluno{mat: $mat} RETURN n.np1',
-                                     {'mat': aux})
-
-    def readnp2(self,aux):
-        return self.db.execute_query('match (n:Aluno{mat: $mat} RETURN n.np2',
-                                     {'mat': aux})
-
+    tcrud = crudmenu()
 
     op = 0;
 
@@ -53,12 +23,34 @@ if __name__ == '__main__':
             f'Menu professor:'
             f'1 - adicionar aluno'
             f'2 - ver alunos'
-            f'4 - deletar aluno'
-            f'6 - atualizar nota da NP1'
-            f'8 - atualizar nota da NP2'
+            f'3 - deletar aluno'
+            f'4 - atualizar nota da NP1'
+            f'5 - atualizar nota da NP2'
             f'0 - Sair\nOpcão: '))
 
-    if(op == 1):
+            if aux == 1:
+                nome = input('Nome: ')
+                mat = input('Matricula: ')
+                np1 = input('NP1: ')
+                np2 = input('NP2: ')
+
+                aluno = {
+                    'nome': nome,
+                    'mat': mat,
+                    'np1': np1,
+                    'np2': np2
+                }
+
+                tcrud.create(aluno)
+                print('\n')
+                print('Aluno cadastrado')
+
+            elif aux == 2:
+                print('Alunos cadastrados na disciplina: \n')
+                tcrud.read()
+
+
+    elif (op == 1):
         while aux != 4:
             aux = int(input(f'Bem vindo aluno de Banco de Dados'
             f'Menu aluno:'
