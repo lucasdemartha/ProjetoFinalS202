@@ -7,7 +7,7 @@ if __name__ == '__main__':
 
     tcrud = crudmenu()
 
-    op = 0;
+    op = 0
 
     op = int(input(f'Bem vindo ao Portal do inatel - S202'
     f'Digite 1 se for aluno ou digite 2 se for professor: '))
