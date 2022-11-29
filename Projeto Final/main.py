@@ -3,8 +3,6 @@ from crud import crudmenu
 from db.database import Graph
 from helper.write_a_json import write_a_json as wj
 
-db = Graph(uri='bolt://54.166.33.76:7687', user='neo4j', password='cycles-facepiece-baby')
-
 if __name__ == '__main__':
 
     tcrud = crudmenu()

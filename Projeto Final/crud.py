@@ -1,3 +1,7 @@
+from db.database import Graph
+
+db = Graph(uri='bolt://54.166.33.76:7687', user='neo4j', password='cycles-facepiece-baby')
+
 class crudmenu(object):
 
     def __init__(self):
