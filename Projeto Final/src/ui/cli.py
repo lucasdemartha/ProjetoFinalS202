@@ -13,6 +13,7 @@ class CLI:
 
     def run(self) -> None:
         """"""
+        print('Bem vindo ao Portal do INATEL - S202\n')
         self._show_menu()
 
     def _get_user_option(self) -> str:
@@ -26,6 +27,12 @@ class CLI:
         print()
         print(f"Desculpe, mas a opção digitada '{user_option}' é invalida. Por favor, tente novamente.")
 
+    def _check_if_aluno_exists(self, matricula: str) -> bool:
+        """"""
+        response = self.aluno_repository.read(matricula)
+
+        return True if response else False
+
     def _show_bye(self) -> None:
         """"""
         print()
@@ -33,7 +40,6 @@ class CLI:
 
     def _show_menu(self) -> None:
         """"""
-        print('Bem vindo ao Portal do INATEL - S202\n')
         print('Digite 1 se for aluno, 2 se for professor e 0 para sair.')
 
         user_option = self._get_user_option()
@@ -42,8 +48,15 @@ class CLI:
             return self._show_bye()
 
         if user_option == "1":
-            print("Bem vindo aluno de Banco de Dados!")
-            return self._show_menu_aluno()
+            matricula = input("Por favor, digite sua matrícula: ")
+            aluno_exists = self._check_if_aluno_exists(matricula)
+
+            if aluno_exists:
+                print("Bem vindo aluno de Banco de Dados!")
+                return self._show_menu_aluno(matricula)
+
+            print("Desculpe, mas a matrícula para esse aluno é inválida. Por favor, tente criar um aluno com essa matrícula primeiro através da interface do professor.", end="\n\n")
+            return self._show_menu()
 
         if user_option == "2":
             print("Bem vindo professor de Banco de Dados!")
@@ -52,8 +65,42 @@ class CLI:
         self._show_invalid_option(user_option)
         return self._show_menu()
 
-    def _show_menu_aluno(self) -> None:
+    def _show_menu_aluno(self, matricula: str) -> None:
         """"""
+        print("""
+        Menu aluno:
+            1 - Ver nota da NP1
+            2 - Ver nota da NP2
+            3 - Ver nota final
+            0 - Sair
+        """
+        )
+
+        user_option = self._get_user_option()
+
+        if user_option == "0":
+            return self._show_bye()
+
+        if user_option == "1":
+            nota_aluno = self.aluno_repository.read_np1(matricula)
+            self._show_nota_aluno(nota_aluno)
+
+        elif user_option == "2":
+            nota_aluno = self.aluno_repository.read_np2(matricula)
+            self._show_nota_aluno(nota_aluno)
+
+        elif user_option == "3":
+            nota_aluno = self.aluno_repository.read_nota_final(matricula)
+            self._show_nota_aluno(nota_aluno)
+
+        else:
+            self._show_invalid_option(user_option)
+
+        return self._show_menu_aluno(matricula)
+
+    def _show_nota_aluno(self, nota_aluno: float) -> None:
+        """"""
+        print(f"A nota do aluno é: {nota_aluno}", end='\n\n')
 
     def _show_menu_professor(self) -> None:
         """"""
@@ -62,9 +109,10 @@ class CLI:
             1 - Adicionar aluno
             2 - Ver aluno
             3 - Ver alunos
-            4 - Atualizar nota da NP1
-            5 - Atualizar nota da NP2
-            6 - Deletar aluno
+            4 - Ver média da nota final dos alunos
+            5 - Atualizar nota da NP1
+            6 - Atualizar nota da NP2
+            7 - Deletar aluno
             0 - Sair
         """
         )
@@ -87,14 +135,18 @@ class CLI:
             return self._show_menu_professor()
 
         if user_option == "4":
-            self._update_aluno_np1()
+            self._read_nota_final_average()
             return self._show_menu_professor()
 
         if user_option == "5":
-            self._update_aluno_np2()
+            self._update_aluno_np1()
             return self._show_menu_professor()
 
         if user_option == "6":
+            self._update_aluno_np2()
+            return self._show_menu_professor()
+
+        if user_option == "7":
             self._delete_aluno()
             return self._show_menu_professor()
 
@@ -129,6 +181,12 @@ class CLI:
 
         print("Alunos:", end="\n\n")
         print(alunos)
+
+    def _read_nota_final_average(self) -> None:
+        """"""
+        media_nota_final = self.aluno_repository.read_nota_final_average()
+
+        print(f"Média Nota Final dos Alunos: {media_nota_final}", end="\n\n")
 
     def _update_aluno_np1(self) -> None:
         """"""

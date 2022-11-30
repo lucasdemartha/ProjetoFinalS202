@@ -1,5 +1,5 @@
 
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 from neo4j import GraphDatabase
 from neo4j import Driver
@@ -14,7 +14,7 @@ class Neo4J:
     def close(self):
         self._connection.close()
 
-    def execute_query(self, query: str, parameters: Optional[Dict[str, Any]]) -> Optional[tuple[Any]]:
+    def execute_query(self, query: str, parameters: Optional[Dict[str, Any]]) -> Optional[List[Dict[str, Any]]]:
         data = []
 
         with self._connection.session() as session:
