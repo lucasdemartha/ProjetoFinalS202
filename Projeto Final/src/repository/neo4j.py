@@ -1,10 +1,8 @@
 
-from typing import Any, Optional
+from typing import Any, Dict, Optional
 
 from neo4j import GraphDatabase
 from neo4j import Driver
-
-# db = Graph(uri='bolt://54.166.33.76:7687', user='neo4j', password='cycles-facepiece-baby')
 
 
 class Neo4J:
@@ -16,10 +14,10 @@ class Neo4J:
     def close(self):
         self._connection.close()
 
-    def execute_query(self, query: str, parameters: Optional[tuple[Any, ...]]=None) -> Optional[tuple[Any]]:
+    def execute_query(self, query: str, parameters: Optional[Dict[str, Any]]) -> Optional[tuple[Any]]:
         data = []
 
-        with self.driver.session() as session:
+        with self._connection.session() as session:
             results = session.run(query, parameters)
 
             for record in results:
