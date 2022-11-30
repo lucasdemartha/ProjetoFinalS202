@@ -152,7 +152,6 @@ class CLI:
         """"""
         matricula = input("Digite a matricula do aluno: ")
 
-        response = self.aluno_repository.delete(matricula)
-        print('RESPONSE: ', response)
+        self.aluno_repository.delete(matricula)
 
         print(f"Aluno da matrícula {matricula} foi removido!")
