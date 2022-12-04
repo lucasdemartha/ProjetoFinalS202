@@ -6,9 +6,9 @@ from src.ui import CLI
 def main() -> None:
     """"""
 
-    uri = 'bolt://54.166.33.76:7687'
+    uri = 'bolt://44.203.4.43:7687'
     user = 'neo4j'
-    password = 'cycles-facepiece-baby'
+    password = 'injuries-crafts-maximum'
 
     banco_neo4j = Neo4J(uri, user, password)
 
